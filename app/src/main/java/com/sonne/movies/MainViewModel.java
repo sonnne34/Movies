@@ -39,8 +39,8 @@ public class MainViewModel extends AndroidViewModel {
                 .subscribe(new Consumer<MovieDoc>() {
                     @Override
                     public void accept(MovieDoc movieDocs) throws Throwable {
-                        movieLiveData.setValue(movieDocs.getMovieList());
                         page++;
+                        movieLiveData.setValue(movieDocs.getMovieList());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
