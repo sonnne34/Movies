@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 public class Movie {
 
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("description")
     private String description;
     @SerializedName("year")
-    private String year;
+    private int year;
     @SerializedName("poster")
     private Poster poster;
     @SerializedName("rating")
     private Rating rating;
 
-    public Movie(String id, String name, String description, String year, Poster poster, Rating rating) {
+    public Movie(int id, String name, String description, int year, Poster poster, Rating rating) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,7 +26,7 @@ public class Movie {
         this.rating = rating;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -38,7 +38,7 @@ public class Movie {
         return description;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
@@ -48,5 +48,17 @@ public class Movie {
 
     public Rating getRating() {
         return rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", year='" + year + '\'' +
+                ", poster=" + poster +
+                ", rating=" + rating +
+                '}';
     }
 }
