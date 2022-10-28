@@ -1,5 +1,6 @@
 package com.sonne.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                if (isLoading){
+                if (isLoading) {
                     progressBar.setVisibility(View.VISIBLE);
                 } else {
                     progressBar.setVisibility(View.GONE);
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReachEnd() {
                 mainViewModel.loadMovies();
+            }
+        });
+
+        adapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie movie) {
+                Intent intent = DetailMovieActivity.newIntent(MainActivity.this, movie);
+                startActivity(intent);
             }
         });
     }
