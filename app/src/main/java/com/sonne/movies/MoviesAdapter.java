@@ -19,10 +19,15 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
     private List<Movie> movieList = new ArrayList<>();
+        private OnReachEndListener onReachEndListener;
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
         notifyDataSetChanged();
+    }
+
+    public void setOnReachEndListener(OnReachEndListener onReachEndListener) {
+        this.onReachEndListener = onReachEndListener;
     }
 
     @NonNull
@@ -55,7 +60,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         Drawable background = ContextCompat.getDrawable(holder.itemView.getContext(), backgroundId);
         holder.textViewRating.setBackground(background);
-        holder.textViewRating.setText(String.format("%."+ 3 +"s", ratingString));
+        holder.textViewRating.setText(String.format("%." + 3 + "s", ratingString));
+
+        if (position >= movieList.size() - 10 && onReachEndListener != null) {
+            onReachEndListener.onReachEnd();
+        }
+    }
+
+    interface OnReachEndListener {
+
+        void onReachEnd();
     }
 
     @Override
