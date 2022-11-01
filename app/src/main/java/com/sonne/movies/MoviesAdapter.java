@@ -96,13 +96,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
-
         private final ImageView imageViewPoster;
         private final TextView textViewRating;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imageViewPoster = itemView.findViewById(R.id.imageViewPoster);
             textViewRating = itemView.findViewById(R.id.textViewRating);
         }

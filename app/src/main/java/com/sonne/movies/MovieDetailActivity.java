@@ -3,13 +3,13 @@ package com.sonne.movies;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -26,12 +26,19 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView textViewYear;
     private TextView textViewDescription;
 
+    private RecyclerView recyclerView;
+    private TrailersAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
         initView();
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
+
+        recyclerView = findViewById(R.id.rvTrailer);
+        adapter = new TrailersAdapter();
+        recyclerView.setAdapter(adapter);
 
         Glide.with(this)
                 .load(movie.getPoster().getUrl())
@@ -42,11 +49,11 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieDetailViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
         //        movieDetailViewModel.loadTrailers(movie.getId());
-        movieDetailViewModel.loadTrailers(545);
+        movieDetailViewModel.loadTrailers(525);
         movieDetailViewModel.getTrailers().observe(this, new Observer<List<Trailer>>() {
             @Override
             public void onChanged(List<Trailer> trailerList) {
-                Log.d(TAG, trailerList.toString());
+                adapter.setTrailerList(trailerList);
             }
         });
     }
