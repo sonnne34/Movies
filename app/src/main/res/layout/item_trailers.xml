@@ -9,6 +9,7 @@
         android:id="@+id/buttonTrailer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:drawableEnd="@drawable/ic_play"
         android:gravity="start"
         android:textAllCaps="false"
