@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "MovieDetailActivity";
     private static final String EXTRA_MOVIE = "movie";
 
     private MovieDetailViewModel movieDetailViewModel;
@@ -27,8 +26,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView textViewYear;
     private TextView textViewDescription;
 
-    private RecyclerView recyclerView;
-    private TrailersAdapter adapter;
+    private RecyclerView trailersRecyclerView;
+    private RecyclerView reviewsRecyclerView;
+    private TrailersAdapter trailersAdapter;
+    private ReviewsAdapter reviewsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +38,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         initView();
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
 
-        recyclerView = findViewById(R.id.rvTrailer);
-        adapter = new TrailersAdapter();
-        recyclerView.setAdapter(adapter);
+        trailersRecyclerView = findViewById(R.id.rvTrailer);
+        trailersAdapter = new TrailersAdapter();
+        trailersRecyclerView.setAdapter(trailersAdapter);
 
+        reviewsRecyclerView = findViewById(R.id.rvReview);
+        reviewsAdapter = new ReviewsAdapter();
+        reviewsRecyclerView.setAdapter(reviewsAdapter);
 
         Glide.with(this)
                 .load(movie.getPoster().getUrl())
@@ -55,16 +59,24 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel.getTrailers().observe(this, new Observer<List<Trailer>>() {
             @Override
             public void onChanged(List<Trailer> trailerList) {
-                adapter.setTrailerList(trailerList);
+                trailersAdapter.setTrailerList(trailerList);
             }
         });
 
-        adapter.setOnTrailerClickListener(new TrailersAdapter.OnTrailerClickListener() {
+        trailersAdapter.setOnTrailerClickListener(new TrailersAdapter.OnTrailerClickListener() {
             @Override
             public void onTrailerClick(Trailer trailer) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(trailer.getUrl()));
                 startActivity(intent);
+            }
+        });
+
+        movieDetailViewModel.loadReviews(movie.getId());
+        movieDetailViewModel.getReviews().observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                reviewsAdapter.setReviewList(reviews);
             }
         });
     }
