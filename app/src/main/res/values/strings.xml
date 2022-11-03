@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">Кинчики</string>
     <string name="item_favourite">Избранное</string>
 </resources>
