@@ -15,21 +15,21 @@
         android:theme="@style/Theme.Movies"
         tools:targetApi="31">
         <activity
-            android:name=".FavouriteMovieActivity"
+            android:name=".presentation.favourite_movie_activity.FavouriteMovieActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MovieDetailActivity"
+            android:name=".presentation.movie_detail_activity.MovieDetailActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.main_activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

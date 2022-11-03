@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.main_activity;
 
 import android.app.Application;
 import android.util.Log;
@@ -7,6 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.sonne.movies.data.api.ApiFactory;
+import com.sonne.movies.data.models.Movie;
+import com.sonne.movies.data.models.MovieDoc;
 
 import java.util.List;
 

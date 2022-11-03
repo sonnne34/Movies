@@ -1,10 +1,12 @@
-package com.sonne.movies;
+package com.sonne.movies.data.database;
 
 import android.app.Application;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.sonne.movies.data.models.Movie;
 
 @Database(entities = {Movie.class}, version = 2, exportSchema = false)
 public abstract class MovieDatabase extends RoomDatabase {
@@ -22,5 +24,5 @@ public abstract class MovieDatabase extends RoomDatabase {
         return instance;
     }
 
-    abstract MovieDao movieDao();
+    public abstract MovieDao movieDao();
 }

@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.adapters;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,12 +81,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         });
     }
 
-    interface OnReachEndListener {
+    public interface OnReachEndListener {
 
         void onReachEnd();
     }
 
-    interface OnMovieClickListener {
+    public interface OnMovieClickListener {
 
         void onMovieClick(Movie movie);
     }

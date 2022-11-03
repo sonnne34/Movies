@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.data.api;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;

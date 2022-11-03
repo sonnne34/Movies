@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.adapters;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Review;
 
 import java.util.ArrayList;
 import java.util.List;

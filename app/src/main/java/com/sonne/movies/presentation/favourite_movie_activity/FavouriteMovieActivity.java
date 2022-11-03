@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.favourite_movie_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Movie;
+import com.sonne.movies.presentation.adapters.MoviesAdapter;
+import com.sonne.movies.presentation.movie_detail_activity.MovieDetailActivity;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.movie_detail_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Movie;
+import com.sonne.movies.data.models.Review;
+import com.sonne.movies.data.models.Trailer;
+import com.sonne.movies.presentation.adapters.ReviewsAdapter;
+import com.sonne.movies.presentation.adapters.TrailersAdapter;
 
 import java.util.List;
 
