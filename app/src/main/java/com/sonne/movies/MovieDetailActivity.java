@@ -2,12 +2,15 @@ package com.sonne.movies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.functions.Action;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -30,6 +28,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView textViewTitle;
     private TextView textViewYear;
     private TextView textViewDescription;
+    private ImageView imageViewStar;
 
     private RecyclerView trailersRecyclerView;
     private RecyclerView reviewsRecyclerView;
@@ -40,14 +39,14 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
+
         initView();
+
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
 
-        trailersRecyclerView = findViewById(R.id.rvTrailer);
         trailersAdapter = new TrailersAdapter();
         trailersRecyclerView.setAdapter(trailersAdapter);
 
-        reviewsRecyclerView = findViewById(R.id.rvReview);
         reviewsAdapter = new ReviewsAdapter();
         reviewsRecyclerView.setAdapter(reviewsAdapter);
 
@@ -59,8 +58,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewDescription.setText(movie.getDescription());
 
         movieDetailViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
-        //        movieDetailViewModel.loadTrailers(movie.getId());
-        movieDetailViewModel.loadTrailers(525);
+
+        movieDetailViewModel.loadTrailers(movie.getId());
         movieDetailViewModel.getTrailers().observe(this, new Observer<List<Trailer>>() {
             @Override
             public void onChanged(List<Trailer> trailerList) {
@@ -84,6 +83,39 @@ public class MovieDetailActivity extends AppCompatActivity {
                 reviewsAdapter.setReviewList(reviews);
             }
         });
+
+        Drawable starOff = ContextCompat.getDrawable(
+                MovieDetailActivity.this,
+                android.R.drawable.star_big_off
+        );
+
+        Drawable starOn = ContextCompat.getDrawable(
+                MovieDetailActivity.this,
+                android.R.drawable.star_big_on
+        );
+
+        movieDetailViewModel.getFavouriteMovie(movie.getId()).observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movieFromDB) {
+                if (movieFromDB == null) {
+                    imageViewStar.setImageDrawable(starOff);
+                    imageViewStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            movieDetailViewModel.insertMovie(movie);
+                        }
+                    });
+                } else {
+                    imageViewStar.setImageDrawable(starOn);
+                    imageViewStar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            movieDetailViewModel.removeMovie(movie.getId());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -91,6 +123,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewYear = findViewById(R.id.textViewYear);
         textViewDescription = findViewById(R.id.textViewDescription);
+        imageViewStar = findViewById(R.id.imageViewStar);
+        trailersRecyclerView = findViewById(R.id.rvTrailer);
+        reviewsRecyclerView = findViewById(R.id.rvReview);
     }
 
     public static Intent newIntent(Context context, Movie movie) {
