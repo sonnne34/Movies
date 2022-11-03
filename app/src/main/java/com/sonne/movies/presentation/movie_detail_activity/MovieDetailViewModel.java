@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.movie_detail_activity;
 
 import android.app.Application;
 import android.util.Log;
@@ -7,6 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.sonne.movies.data.api.ApiFactory;
+import com.sonne.movies.data.models.Movie;
+import com.sonne.movies.data.database.MovieDao;
+import com.sonne.movies.data.database.MovieDatabase;
+import com.sonne.movies.data.models.Review;
+import com.sonne.movies.data.models.ReviewDoc;
+import com.sonne.movies.data.models.Trailer;
+import com.sonne.movies.data.models.TrailerResponse;
 
 import java.util.List;
 
@@ -19,12 +28,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MovieDetailViewModel extends AndroidViewModel {
 
-    public MovieDetailViewModel(@NonNull Application application) {
-        super(application);
-    }
-
     private static final String TAG = "MovieDetailViewModel";
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final MovieDao movieDao;
+
+    public MovieDetailViewModel(@NonNull Application application) {
+        super(application);
+        movieDao = MovieDatabase.getInstance(application).movieDao();
+    }
 
     private final MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
     public LiveData<List<Trailer>> getTrailers() {
@@ -34,6 +45,10 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private final MutableLiveData<List<Review>> reviews = new MutableLiveData<>();
     public LiveData<List<Review>> getReviews() {
         return reviews;
+    }
+
+    public LiveData<Movie> getFavouriteMovie(int movieId){
+        return movieDao.getFavouriteMovie(movieId);
     }
 
     public void loadReviews(int id){
@@ -76,6 +91,20 @@ public class MovieDetailViewModel extends AndroidViewModel {
                         Log.d(TAG, throwable.toString());
                     }
                 });
+        compositeDisposable.add(disposable);
+    }
+
+    public void insertMovie(Movie movie){
+        Disposable disposable = movieDao.insertMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+        compositeDisposable.add(disposable);
+    }
+
+    public void removeMovie(int movieId){
+        Disposable disposable = movieDao.removeMovie(movieId)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
         compositeDisposable.add(disposable);
     }
 

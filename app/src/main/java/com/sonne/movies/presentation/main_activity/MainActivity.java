@@ -1,15 +1,24 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.main_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Movie;
+import com.sonne.movies.presentation.favourite_movie_activity.FavouriteMovieActivity;
+import com.sonne.movies.presentation.movie_detail_activity.MovieDetailActivity;
+import com.sonne.movies.presentation.adapters.MoviesAdapter;
 
 import java.util.List;
 
@@ -62,5 +71,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.itemFavouritesMovies){
+            Intent intent = FavouriteMovieActivity.newIntent(MainActivity.this);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

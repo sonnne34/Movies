@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.data.models;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.sonne.movies;
+package com.sonne.movies.presentation.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sonne.movies.R;
+import com.sonne.movies.data.models.Trailer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +67,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         }
     }
 
-    interface OnTrailerClickListener {
+    public interface OnTrailerClickListener {
         void onTrailerClick(Trailer trailer);
     }
 

@@ -1,6 +1,8 @@
-package com.sonne.movies;
+package com.sonne.movies.data.api;
 
-import java.util.List;
+import com.sonne.movies.data.models.MovieDoc;
+import com.sonne.movies.data.models.ReviewDoc;
+import com.sonne.movies.data.models.TrailerResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
